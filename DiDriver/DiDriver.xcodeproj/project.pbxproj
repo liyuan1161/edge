@@ -15,6 +15,7 @@
 		1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */; };
 		1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C032CFDABBB0021AEA3 /* Logger.swift */; };
 		1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C052CFDDE610021AEA3 /* Global.swift */; };
+		1CAA7C092CFDF7B90021AEA3 /* SpeedometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C082CFDF7B90021AEA3 /* SpeedometerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1CAA7C032CFDABBB0021AEA3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		1CAA7C052CFDDE610021AEA3 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1CAA7C072CFDE28E0021AEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1CAA7C082CFDF7B90021AEA3 /* SpeedometerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedometerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				1CAA7C072CFDE28E0021AEA3 /* Info.plist */,
 				1CAA7BF02CFD9A700021AEA3 /* DiDriverApp.swift */,
 				1CAA7BF22CFD9A700021AEA3 /* ContentView.swift */,
+				1CAA7C082CFDF7B90021AEA3 /* SpeedometerView.swift */,
 				1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */,
 				1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */,
 				1CAA7C032CFDABBB0021AEA3 /* Logger.swift */,
@@ -154,6 +157,7 @@
 				1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */,
 				1CAA7BF32CFD9A700021AEA3 /* ContentView.swift in Sources */,
 				1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */,
+				1CAA7C092CFDF7B90021AEA3 /* SpeedometerView.swift in Sources */,
 				1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */,
 				1CAA7BF12CFD9A700021AEA3 /* DiDriverApp.swift in Sources */,
 				1CAA7C002CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift in Sources */,
