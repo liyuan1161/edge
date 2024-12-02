@@ -1,5 +1,6 @@
-![Uploading IMG_0767.PNG…]()
+
 1.app检测手机位置发生重大改变后启动app
+![IMG_0767](https://github.com/user-attachments/assets/d6cd377f-db62-4733-932c-eb1451ee7157)
 
 2.基于手机的 GPS 数据判断车辆的加速、减速、转弯以及驾驶员玩手机等行为，
   结合 GPS 数据与手机的其他传感器（如加速度计、陀螺仪等）进行分析。
