@@ -30,7 +30,7 @@ class Logger {
     func log(_ message: String) {
         logQueue.async { [weak self] in
             guard let self = self else { return }
-            let timestamp = Date().description
+            let timestamp = self.currentTimestamp()
             let logMessage = "[\(timestamp)] \(message)\n"
             self.logBuffer.append(logMessage) // 将日志消息添加到缓冲区
             
@@ -39,6 +39,13 @@ class Logger {
                 self.flush()
             }
         }
+    }
+    
+    private func currentTimestamp() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        formatter.locale = Locale.current // 使用当前设备的地区设置
+        return formatter.string(from: Date())
     }
     
     // 将缓冲区中的日志消息写入文件

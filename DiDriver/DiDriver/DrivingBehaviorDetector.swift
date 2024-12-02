@@ -11,7 +11,7 @@ import CoreMotion
 import SwiftUI
 
 class DrivingBehaviorDetector: ObservableObject {
-    private var locationHandler = LocationManagerHandler()
+    private var locationHandler = LocationManagerHandler.shared
     
     // 用于存储上一次的速度和方向
     private var lastSpeed: CLLocationSpeed = 0.0
@@ -20,16 +20,19 @@ class DrivingBehaviorDetector: ObservableObject {
     // 卡尔曼滤波器参数
     private var kalmanFilter: KalmanFilter = KalmanFilter()
     
-    // 用于发布检测到的行为
+    // 用于发布检测到的行为和当前时速
     @Published var detectedBehavior: String = "等待检测..."
+    @Published var currentSpeed: Double = 0.0 // 当前时速，单位为 km/h
+    @Published var rawSpeed: Double = 0.0 // 原始速度，单位为 km/h
+    @Published var smoothedSpeed: Double = 0.0 // 平滑后的速度，单位为 km/h
     
     init() {
         setupHandlers()
     }
     
     private func setupHandlers() {
-        locationHandler.onLocationUpdate = { [weak self] speed, heading in
-            self?.updateLocationData(speed: speed, heading: heading)
+        locationHandler.onLocationUpdate = { [weak self] location in
+            self?.updateLocationData(location: location)
         }
         
         locationHandler.onAccelerationUpdate = { [weak self] acceleration in
@@ -43,63 +46,73 @@ class DrivingBehaviorDetector: ObservableObject {
     
     // 检测加速度变化
     private func detectAcceleration(_ acceleration: CMAcceleration) {
-        let stableAccelerationThreshold: Double = 2.0 // m/s²
-        let fastAccelerationThreshold: Double = 4.0 // m/s²
-        let rapidAccelerationThreshold: Double = 6.0 // m/s²
-        
-        let mildDecelerationThreshold: Double = -4.0 // m/s²
-        let strongDecelerationThreshold: Double = -6.0 // m/s²
-        
-        let magnitude = sqrt(acceleration.x * acceleration.x + acceleration.y * acceleration.y + acceleration.z * acceleration.z)
-        
-        // 加速检测
-        if magnitude > rapidAccelerationThreshold {
-            detectedBehavior = "赛车级加速"
-        } else if magnitude > fastAccelerationThreshold {
-            detectedBehavior = "急加速"
-        } else if magnitude > stableAccelerationThreshold {
-            detectedBehavior = "快速加速"
-        } else if magnitude > 0 {
-            detectedBehavior = "平稳加速"
-        }
-        
-        // 减速检测
-        if acceleration.x < strongDecelerationThreshold || acceleration.y < strongDecelerationThreshold || acceleration.z < strongDecelerationThreshold {
-            detectedBehavior = "紧急刹车"
-        } else if acceleration.x < mildDecelerationThreshold || acceleration.y < mildDecelerationThreshold || acceleration.z < mildDecelerationThreshold {
-            detectedBehavior = "减速"
-        }
-        
-        Logger.shared.log(detectedBehavior) // 使用单例记录日志
+        // 这里不再使用加速度传感器来判断加速或减速
     }
     
     // 检测旋转变化
     private func detectRotation(_ rotationRate: CMRotationRate) {
-        let threshold: Double = 10.0 // 每秒度数
-        if rotationRate.z > threshold {
-            detectedBehavior = "右拐弯"
-            Logger.shared.log(detectedBehavior) // 使用单例记录日志
-        } else if rotationRate.z < -threshold {
-            detectedBehavior = "左拐弯"
-            Logger.shared.log(detectedBehavior) // 使用单例记录日志
+        let rightTurnThreshold: Double = 10.0 // 右拐弯阈值
+        let leftTurnThreshold: Double = -10.0 // 左拐弯阈值
+        let slightTurnThreshold: Double = 5.0 // 轻微转弯阈值
+        let straightThreshold: Double = 2.0 // 直行阈值
+
+        if rotationRate.z > rightTurnThreshold {
+            detectedBehavior = "紧急右拐弯"
+        } else if rotationRate.z < leftTurnThreshold {
+            detectedBehavior = "紧急左拐弯"
+        } else if rotationRate.z > slightTurnThreshold {
+            detectedBehavior = "右转"
+        } else if rotationRate.z < -slightTurnThreshold {
+            detectedBehavior = "左转"
+        } else if abs(rotationRate.z) < straightThreshold {
+            detectedBehavior = "直行"
+        } else {
+            detectedBehavior = "轻微调整"
         }
+        logMessage("\(detectedBehavior) - rotationRate.z: \(rotationRate.z)") // 打印 rotationRate.z
     }
     
     // 更新位置数据
-    private func updateLocationData(speed: CLLocationSpeed, heading: CLLocationDirection) {
-        let filteredSpeed = kalmanFilter.filter(measurement: speed) // 使用卡尔曼滤波器平滑速度
+    private func updateLocationData(location: CLLocation) {
+        let filteredSpeed = kalmanFilter.filter(measurement: location.speed) // 使用卡尔曼滤波器平滑速度
+        
+        // 将速度从 m/s 转换为 km/h
+        rawSpeed = location.speed * 3.6
+        smoothedSpeed = filteredSpeed * 3.6
+        
+        // 更新当前速度
+        currentSpeed = smoothedSpeed
+        
+        // 根据速度变化检测加速和减速
+        let speedDifference = filteredSpeed - lastSpeed
+        
+        if speedDifference > 0 {
+            if speedDifference > 2.0 { // 设定一个阈值来判断快速加速
+                detectedBehavior = "快速加速"
+            } else {
+                detectedBehavior = "平稳加速"
+            }
+        } else if speedDifference < 0 {
+            if speedDifference < -2.0 { // 设定一个阈值来判断快速减速
+                detectedBehavior = "快速减速"
+            } else {
+                detectedBehavior = "平稳减速"
+            }
+        }
+        
+        logMessage(detectedBehavior) // 使用全局函数记录日志
         
         // 检测启动和停止
         if filteredSpeed > 0 && lastSpeed == 0 {
             detectedBehavior = "启动"
-            Logger.shared.log(detectedBehavior) // 使用单例记录日志
+            logMessage(detectedBehavior) // 使用全局函数记录日志
         } else if filteredSpeed == 0 && lastSpeed > 0 {
             detectedBehavior = "停止"
-            Logger.shared.log(detectedBehavior) // 使用单例记录日志
+            logMessage(detectedBehavior) // 使用全局函数记录日志
         }
         
         lastSpeed = filteredSpeed // 更新上一次的速度
-        lastHeading = heading // 更新上一次的方向
+        lastHeading = location.course // 更新上一次的方向
     }
 }
 

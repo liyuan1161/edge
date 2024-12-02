@@ -19,5 +19,5 @@ struct DiDriverApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    var locationHandler = LocationManagerHandler()
+    var locationHandler = LocationManagerHandler.shared
 }

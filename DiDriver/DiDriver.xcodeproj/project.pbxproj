@@ -14,6 +14,7 @@
 		1CAA7C002CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */; };
 		1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */; };
 		1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C032CFDABBB0021AEA3 /* Logger.swift */; };
+		1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C052CFDDE610021AEA3 /* Global.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingBehaviorDetector.swift; sourceTree = "<group>"; };
 		1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerHandler.swift; sourceTree = "<group>"; };
 		1CAA7C032CFDABBB0021AEA3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		1CAA7C052CFDDE610021AEA3 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		1CAA7C072CFDE28E0021AEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +60,13 @@
 		1CAA7BEF2CFD9A700021AEA3 /* DiDriver */ = {
 			isa = PBXGroup;
 			children = (
+				1CAA7C072CFDE28E0021AEA3 /* Info.plist */,
 				1CAA7BF02CFD9A700021AEA3 /* DiDriverApp.swift */,
 				1CAA7BF22CFD9A700021AEA3 /* ContentView.swift */,
 				1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */,
 				1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */,
 				1CAA7C032CFDABBB0021AEA3 /* Logger.swift */,
+				1CAA7C052CFDDE610021AEA3 /* Global.swift */,
 				1CAA7BF42CFD9A720021AEA3 /* Assets.xcassets */,
 				1CAA7BF62CFD9A720021AEA3 /* Preview Content */,
 			);
@@ -148,6 +153,7 @@
 			files = (
 				1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */,
 				1CAA7BF32CFD9A700021AEA3 /* ContentView.swift in Sources */,
+				1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */,
 				1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */,
 				1CAA7BF12CFD9A700021AEA3 /* DiDriverApp.swift in Sources */,
 				1CAA7C002CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift in Sources */,
@@ -287,6 +293,9 @@
 				DEVELOPMENT_TEAM = VRKGF3W7Y5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiDriver/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "小迪一直需要您的位置信息。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "小迪需要您的位置信息。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -317,6 +326,9 @@
 				DEVELOPMENT_TEAM = VRKGF3W7Y5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DiDriver/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "小迪一直需要您的位置信息。";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "小迪需要您的位置信息。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
