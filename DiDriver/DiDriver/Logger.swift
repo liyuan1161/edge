@@ -10,17 +10,16 @@ import Foundation
 class Logger {
     static let shared = Logger() // 单例实例
     
-    private let logFileURL: URL
+    private var logFileURL: URL
     private let logQueue = DispatchQueue(label: "com.example.logger", qos: .background)
     private var logBuffer: [String] = [] // 缓冲区，用于暂存日志消息
     private let bufferLimit = 10 // 缓冲区大小限制
 
-    private init(fileName: String = "DrivingBehaviorLog.txt") {
-        let fileManager = FileManager.default
-        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-        logFileURL = urls[0].appendingPathComponent(fileName)
+    private init() {
+        logFileURL = Logger.getLogFileURL() // 使用静态方法获取日志文件路径
         
         // 初始化日志文件，如果文件不存在则创建
+        let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: logFileURL.path) {
             fileManager.createFile(atPath: logFileURL.path, contents: nil, attributes: nil)
         }
@@ -48,6 +47,17 @@ class Logger {
         return formatter.string(from: Date())
     }
     
+    // 获取当前日期的日志文件路径
+    private static func getLogFileURL() -> URL {
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // 日期格式
+        let dateString = dateFormatter.string(from: Date())
+        let fileName = "DrivingBehaviorLog-\(dateString).txt" // 以日期命名的文件名
+        return urls[0].appendingPathComponent(fileName)
+    }
+    
     // 将缓冲区中的日志消息写入文件
     private func flush() {
         let logMessages = logBuffer.joined() // 合并缓冲区中的消息
@@ -58,6 +68,9 @@ class Logger {
                 fileHandle.seekToEndOfFile() // 移动到文件末尾
                 fileHandle.write(data) // 写入数据
                 fileHandle.closeFile() // 关闭文件
+            } else {
+                // 如果文件无法打开，创建新文件
+                try? data.write(to: logFileURL)
             }
         }
     }
