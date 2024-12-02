@@ -40,7 +40,7 @@ class DrivingBehaviorDetector: ObservableObject {
         }
         
         locationHandler.onRotationUpdate = { [weak self] rotationRate in
-            self?.detectRotation(rotationRate)
+            self?.detectRotationWithAngle(rotationRate)
         }
     }
     
@@ -50,26 +50,54 @@ class DrivingBehaviorDetector: ObservableObject {
     }
     
     // 检测旋转变化
-    private func detectRotation(_ rotationRate: CMRotationRate) {
-        let rightTurnThreshold: Double = 10.0 // 右拐弯阈值
-        let leftTurnThreshold: Double = -10.0 // 左拐弯阈值
-        let slightTurnThreshold: Double = 5.0 // 轻微转弯阈值
-        let straightThreshold: Double = 2.0 // 直行阈值
+    private var rotationSamples: [(time: TimeInterval, angle: Double)] = []
+    private let windowDuration: TimeInterval = 3.0 // 窗口持续时间
+    private var angleThresholds: (emergencyRight: Double, emergencyLeft: Double, right: Double, left: Double, straight: Double) = (45.0, -45.0, 15.0, -15.0, 5.0)
 
-        if rotationRate.z > rightTurnThreshold {
-            detectedBehavior = "紧急右拐弯"
-        } else if rotationRate.z < leftTurnThreshold {
-            detectedBehavior = "紧急左拐弯"
-        } else if rotationRate.z > slightTurnThreshold {
+    private func detectRotationWithAngle(_ rotationRate: CMRotationRate) {
+        let currentTime = Date().timeIntervalSince1970
+        let currentAngle = rotationRate.z
+
+        // 添加当前样本到窗口
+        rotationSamples.append((time: currentTime, angle: currentAngle))
+
+        // 移除超出窗口的样本
+        rotationSamples.removeAll { currentTime - $0.time > windowDuration }
+
+        // 计算窗口内的总旋转角度（基于时间加权）
+        let totalRotationAngle = calculateTotalRotationAngle()
+
+        // 判断行为
+        evaluateRotationBehavior(totalRotationAngle)
+    }
+
+    private func calculateTotalRotationAngle() -> Double {
+        return rotationSamples.enumerated().reduce(0.0) { total, element in
+            let (index, sample) = element
+            if index > 0 {
+                let deltaTime = sample.time - rotationSamples[index - 1].time
+                return total + sample.angle * deltaTime
+            }
+            return total
+        }
+    }
+
+    private func evaluateRotationBehavior(_ totalRotationAngle: Double) {
+        if totalRotationAngle > angleThresholds.emergencyRight {
+            detectedBehavior = "紧急右转"
+        } else if totalRotationAngle < angleThresholds.emergencyLeft {
+            detectedBehavior = "紧急左转"
+        } else if totalRotationAngle > angleThresholds.right {
             detectedBehavior = "右转"
-        } else if rotationRate.z < -slightTurnThreshold {
+        } else if totalRotationAngle < angleThresholds.left {
             detectedBehavior = "左转"
-        } else if abs(rotationRate.z) < straightThreshold {
+        } else if abs(totalRotationAngle) < angleThresholds.straight {
             detectedBehavior = "直行"
         } else {
             detectedBehavior = "轻微调整"
         }
-        logMessage("\(detectedBehavior) - rotationRate.z: \(rotationRate.z)") // 打印 rotationRate.z
+
+        logMessage("Detected Behavior: \(detectedBehavior), Total Rotation Angle: \(totalRotationAngle)")
     }
     
     // 更新位置数据

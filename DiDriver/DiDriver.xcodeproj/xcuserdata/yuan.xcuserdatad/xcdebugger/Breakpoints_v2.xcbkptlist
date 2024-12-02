@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "A4B8A0BF-75EA-4EA2-A02D-DD9FE22C8383"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D1EAE953-2972-4527-8394-F2E94782A17C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiDriver/DrivingBehaviorDetector.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "DrivingBehaviorDetector"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "D1EAE953-2972-4527-8394-F2E94782A17C - e0728dde876ff51a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DiDriver.DrivingBehaviorDetector.detectRotationWithAngle(__C.CMRotationRate) -&gt; ()"
+                  moduleName = "DiDriver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuan/dev/edge/DiDriver/DiDriver/DrivingBehaviorDetector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74">
+               </Location>
+               <Location
+                  uuid = "D1EAE953-2972-4527-8394-F2E94782A17C - 4f78ac982516d7e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DiDriver.DrivingBehaviorDetector.calculateTotalRotationAngle() -&gt; Swift.Double"
+                  moduleName = "DiDriver"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yuan/dev/edge/DiDriver/DiDriver/DrivingBehaviorDetector.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
