@@ -22,7 +22,6 @@
 		1CAA7BF22CFD9A700021AEA3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1CAA7BF42CFD9A720021AEA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1CAA7BF72CFD9A720021AEA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		1CAA7BFE2CFD9ACD0021AEA3 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingBehaviorDetector.swift; sourceTree = "<group>"; };
 		1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerHandler.swift; sourceTree = "<group>"; };
 		1CAA7C032CFDABBB0021AEA3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -63,7 +62,6 @@
 				1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */,
 				1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */,
 				1CAA7C032CFDABBB0021AEA3 /* Logger.swift */,
-				1CAA7BFE2CFD9ACD0021AEA3 /* README.md */,
 				1CAA7BF42CFD9A720021AEA3 /* Assets.xcassets */,
 				1CAA7BF62CFD9A720021AEA3 /* Preview Content */,
 			);
