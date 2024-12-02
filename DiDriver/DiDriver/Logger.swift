@@ -8,12 +8,14 @@
 import Foundation
 
 class Logger {
+    static let shared = Logger() // 单例实例
+    
     private let logFileURL: URL
     private let logQueue = DispatchQueue(label: "com.example.logger", qos: .background)
     private var logBuffer: [String] = [] // 缓冲区，用于暂存日志消息
     private let bufferLimit = 10 // 缓冲区大小限制
 
-    init(fileName: String = "DrivingBehaviorLog.txt") {
+    private init(fileName: String = "DrivingBehaviorLog.txt") {
         let fileManager = FileManager.default
         let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
         logFileURL = urls[0].appendingPathComponent(fileName)
