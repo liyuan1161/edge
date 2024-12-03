@@ -25,12 +25,13 @@ class DrivingBehaviorDetector: ObservableObject {
     @Published var currentSpeed: Double = 0.0 // 当前时速，单位为 km/h
     @Published var rawSpeed: Double = 0.0 // 原始速度，单位为 km/h
     @Published var smoothedSpeed: Double = 0.0 // 平滑后的速度，单位为 km/h
+    @Published var speedChangeBehavior: String = "速度无变化" // 新字段
     
     // 旋转检测参数
     private var rotationSamples: [(time: TimeInterval, angle: Double)] = []
     private let windowDuration: TimeInterval = 3.0
     private let maxSamples = 100
-    private var angleThresholds: (emergencyRight: Double, emergencyLeft: Double, right: Double, left: Double, straight: Double) = (50.0, -50.0, 20.0, -20.0, 10.0)
+    private var angleThresholds: (emergencyRight: Double, emergencyLeft: Double, right: Double, left: Double, straight: Double) = (0.5, -0.5, 0.2, -0.2, 0.05)
 
     init() {
         setupHandlers()
@@ -61,29 +62,39 @@ class DrivingBehaviorDetector: ObservableObject {
         detectSpeedBehavior(speedDifference: filteredSpeed - lastSpeed)
         
         // 检测启动和停止
-        if filteredSpeed > 0 && lastSpeed == 0 {
-            detectedBehavior = "启动"
-            logMessage(detectedBehavior)
-        } else if filteredSpeed == 0 && lastSpeed > 0 {
-            detectedBehavior = "停止"
-            logMessage(detectedBehavior)
-        }
+        detectStartStopBehavior(filteredSpeed: filteredSpeed)
         
         lastSpeed = filteredSpeed
         lastHeading = location.course
     }
     
     private func detectSpeedBehavior(speedDifference: Double) {
-        if speedDifference > 2.0 {
-            detectedBehavior = "快速加速"
+        let accelerationThreshold: Double = 2.0
+        let decelerationThreshold: Double = -2.0
+
+        if speedDifference > accelerationThreshold {
+            speedChangeBehavior = "快速加速"
         } else if speedDifference > 0 {
-            detectedBehavior = "平稳加速"
-        } else if speedDifference < -2.0 {
-            detectedBehavior = "快速减速"
+            speedChangeBehavior = "平稳加速"
+        } else if speedDifference < decelerationThreshold {
+            speedChangeBehavior = "快速减速"
+        } else if speedDifference < 0 {
+            speedChangeBehavior = "平稳减速"
         } else {
-            detectedBehavior = "平稳减速"
+            speedChangeBehavior = "速度保持不变"
         }
-        logMessage("Speed Behavior: \(detectedBehavior), Speed Difference: \(speedDifference)")
+        
+        logMessage("Speed Change Behavior: \(speedChangeBehavior), Speed Difference: \(speedDifference)",level: .info)
+    }
+    
+    private func detectStartStopBehavior(filteredSpeed: CLLocationSpeed) {
+        if filteredSpeed > 0 && lastSpeed == 0 {
+            speedChangeBehavior = "启动"
+            logMessage(detectedBehavior)
+        } else if filteredSpeed == 0 && lastSpeed > 0 {
+            speedChangeBehavior = "停止"
+            logMessage(detectedBehavior,level: .info)
+        }
     }
     
     // 检测旋转变化
@@ -136,7 +147,7 @@ class DrivingBehaviorDetector: ObservableObject {
             detectedBehavior = "轻微调整"
         }
 
-        logMessage("Detected Behavior: \(detectedBehavior), Total Rotation Angle: \(totalRotationAngle)")
+        logMessage("Detected Behavior: \(detectedBehavior), Total Rotation Angle: \(totalRotationAngle)",level: .info)
     }
 }
 

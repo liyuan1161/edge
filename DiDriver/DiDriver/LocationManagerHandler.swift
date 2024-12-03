@@ -26,6 +26,10 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
     
     private func setupLocationManager() {
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = 1 // 每次移动 1 米更新一次位置
+        locationManager.activityType = .automotiveNavigation // 针对驾驶优化定位
+        locationManager.pausesLocationUpdatesAutomatically = false // 禁止自动暂停位置更新
         
         let status = locationManager.authorizationStatus
         
@@ -34,6 +38,13 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
         } else if status == .authorizedWhenInUse {
             locationManager.requestAlwaysAuthorization()
         }
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        } else {
+            logMessage("位置服务不可用，请检查设备设置",level: .error)
+        }
+        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     private func setupMotionManager() {
@@ -41,7 +52,7 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
             motionManager.accelerometerUpdateInterval = 0.1
             motionManager.startAccelerometerUpdates(to: .main) { [weak self] (data, error) in
                 if let acceleration = data?.acceleration {
-                    //Logger.shared.log("加速度: x=\(acceleration.x), y=\(acceleration.y), z=\(acceleration.z)")
+                    //logMessage("加速度: x=\(acceleration.x), y=\(acceleration.y), z=\(acceleration.z)")
                     self?.onAccelerationUpdate?(acceleration)
                 }
             }
@@ -51,7 +62,7 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
             motionManager.gyroUpdateInterval = 0.1
             motionManager.startGyroUpdates(to: .main) { [weak self] (data, error) in
                 if let rotationRate = data?.rotationRate {
-                    //Logger.shared.log("旋转速率: x=\(rotationRate.x), y=\(rotationRate.y), z=\(rotationRate.z)")
+                    //logMessage("旋转速率: x=\(rotationRate.x), y=\(rotationRate.y), z=\(rotationRate.z)")
                     self?.onRotationUpdate?(rotationRate)
                 }
             }
@@ -64,20 +75,43 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.pausesLocationUpdatesAutomatically = false
             locationManager.startMonitoringSignificantLocationChanges()
-            Logger.shared.log("位置授权成功")
+            logMessage("位置授权成功")
         case .denied, .restricted:
-            Logger.shared.log("位置授权被拒绝或受限")
+            logMessage("位置授权被拒绝或受限")
         case .notDetermined:
-            Logger.shared.log("位置授权未确定")
+            logMessage("位置授权未确定")
         @unknown default:
-            Logger.shared.log("未知的授权状态")
+            logMessage("未知的授权状态")
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        
-        Logger.shared.log("位置更新: 速度=\(location.speed), 方向=\(location.course), 时间戳=\(location.timestamp)")
+
+        // 检查位置精度
+        if location.horizontalAccuracy < 0 || location.horizontalAccuracy > 50 {
+            logMessage("位置精度不足: \(location.horizontalAccuracy) 米")
+            return
+        }
+
+        // 检查速度和方向的有效性
+        let speedKmH = location.speed >= 0 ? location.speed * 3.6 : 0 // 转换为 km/h
+        let course = location.course >= 0 ? location.course : -1 // -1 表示方向不可用
+
+        // 格式化时间戳
+        let formattedTime = formatDate(location.timestamp)
+
+        // 日志记录
+        logMessage("位置更新: 速度=\(speedKmH) km/h, 方向=\(course), 时间戳=\(formattedTime)",level: .debug)
+
+        // 调用更新回调
         onLocationUpdate?(location)
+    }
+
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.timeZone = TimeZone.current
+        return formatter.string(from: date)
     }
 }

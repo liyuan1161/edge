@@ -299,6 +299,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiDriver/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "小迪一直需要您的位置信息。";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "小迪需要在后台获取您的位置以确保功能正常";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "小迪需要您的位置信息。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -332,6 +333,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DiDriver/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "小迪一直需要您的位置信息。";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "小迪需要在后台获取您的位置以确保功能正常";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "小迪需要您的位置信息。";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

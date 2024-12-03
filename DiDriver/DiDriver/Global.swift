@@ -7,8 +7,4 @@
 
 import Foundation
 
-func logMessage(_ message: String, file: String = #file, function: String = #function, line: Int = #line) {
-    let fileName = (file as NSString).lastPathComponent
-    let log = "[\(fileName):\(function):\(line)] \(message)"
-    Logger.shared.log(log)
-}
+

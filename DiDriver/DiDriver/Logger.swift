@@ -7,6 +7,27 @@
 
 import Foundation
 
+enum LogLevel: String {
+    case debug = "DEBUG"
+    case info = "INFO"
+    case warning = "WARNING"
+    case error = "ERROR"
+}
+
+func logMessage(_ message: String, level: LogLevel = .info, file: String = #file, function: String = #function, line: Int = #line) {
+    let fileName = (file as NSString).lastPathComponent
+    let log = "[\(level.rawValue)] [\(fileName):\(function):\(line)] \(message)"
+    
+    #if DEBUG
+    if level == .debug {
+        print(log)
+        return
+    }
+    #endif
+    
+    Logger.shared.log(log)
+}
+
 class Logger {
     static let shared = Logger() // 单例实例
     

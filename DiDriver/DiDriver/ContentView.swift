@@ -24,29 +24,35 @@ struct ContentView: View {
 
                 SpeedometerView(speed: behaviorDetector.currentSpeed)
                 
-                VStack(spacing: 10) {
-                    Text("原始速度: \(String(format: "%.1f", behaviorDetector.rawSpeed)) km/h")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.black.opacity(0.7))
-                        .cornerRadius(10)
-
-                    Text("平滑速度: \(String(format: "%.1f", behaviorDetector.smoothedSpeed)) km/h")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.black.opacity(0.7))
-                        .cornerRadius(10)
-                }
-
-                Text(behaviorDetector.detectedBehavior)
+                Text("原始速度: \(String(format: "%.1f", behaviorDetector.rawSpeed)) km/h")
                     .font(.title)
                     .foregroundColor(.white)
                     .padding()
                     .background(Color.black.opacity(0.7))
                     .cornerRadius(10)
 
+                Text("平滑速度: \(String(format: "%.1f", behaviorDetector.smoothedSpeed)) km/h")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.black.opacity(0.7))
+                    .cornerRadius(10)
+                
+                HStack(spacing: 20) {
+                    Text(behaviorDetector.speedChangeBehavior)
+                         .font(.title)
+                         .foregroundColor(.white)
+                         .padding()
+                         .background(Color.black.opacity(0.7))
+                         .cornerRadius(10)
+
+                     Text(behaviorDetector.detectedBehavior)
+                         .font(.title)
+                         .foregroundColor(.white)
+                         .padding()
+                         .background(Color.black.opacity(0.7))
+                         .cornerRadius(10)
+                }
                 Spacer()
             }
             .padding()
