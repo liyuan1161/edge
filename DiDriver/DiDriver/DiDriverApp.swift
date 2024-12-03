@@ -20,4 +20,13 @@ struct DiDriverApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     var locationHandler = LocationManagerHandler.shared
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // 检查应用是否因位置更新而启动
+        if let _ = launchOptions?[.location] {
+            // 处理后台位置启动逻辑
+            logMessage("app 从后台启动")
+        }
+        return true
+    }
 }
