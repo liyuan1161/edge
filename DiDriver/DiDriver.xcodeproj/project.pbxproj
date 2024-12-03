@@ -14,8 +14,11 @@
 		1CAA7C002CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */; };
 		1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */; };
 		1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C032CFDABBB0021AEA3 /* Logger.swift */; };
-		1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C052CFDDE610021AEA3 /* Global.swift */; };
 		1CAA7C092CFDF7B90021AEA3 /* SpeedometerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C082CFDF7B90021AEA3 /* SpeedometerView.swift */; };
+		1CAA7C0B2CFEED830021AEA3 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C0A2CFEED830021AEA3 /* KalmanFilter.swift */; };
+		1CAA7C0D2CFEEDE30021AEA3 /* DiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C0C2CFEEDE30021AEA3 /* DiMapView.swift */; };
+		1CAA7C0F2CFEEE7E0021AEA3 /* DiMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C0E2CFEEE7E0021AEA3 /* DiMapData.swift */; };
+		1CAA7C112CFEF2890021AEA3 /* IdentifiableLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAA7C102CFEF2890021AEA3 /* IdentifiableLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +30,12 @@
 		1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrivingBehaviorDetector.swift; sourceTree = "<group>"; };
 		1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerHandler.swift; sourceTree = "<group>"; };
 		1CAA7C032CFDABBB0021AEA3 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		1CAA7C052CFDDE610021AEA3 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		1CAA7C072CFDE28E0021AEA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1CAA7C082CFDF7B90021AEA3 /* SpeedometerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedometerView.swift; sourceTree = "<group>"; };
+		1CAA7C0A2CFEED830021AEA3 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
+		1CAA7C0C2CFEEDE30021AEA3 /* DiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiMapView.swift; sourceTree = "<group>"; };
+		1CAA7C0E2CFEEE7E0021AEA3 /* DiMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiMapData.swift; sourceTree = "<group>"; };
+		1CAA7C102CFEF2890021AEA3 /* IdentifiableLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentifiableLocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +75,10 @@
 				1CAA7BFF2CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift */,
 				1CAA7C012CFDA9510021AEA3 /* LocationManagerHandler.swift */,
 				1CAA7C032CFDABBB0021AEA3 /* Logger.swift */,
-				1CAA7C052CFDDE610021AEA3 /* Global.swift */,
+				1CAA7C0A2CFEED830021AEA3 /* KalmanFilter.swift */,
+				1CAA7C0C2CFEEDE30021AEA3 /* DiMapView.swift */,
+				1CAA7C0E2CFEEE7E0021AEA3 /* DiMapData.swift */,
+				1CAA7C102CFEF2890021AEA3 /* IdentifiableLocation.swift */,
 				1CAA7BF42CFD9A720021AEA3 /* Assets.xcassets */,
 				1CAA7BF62CFD9A720021AEA3 /* Preview Content */,
 			);
@@ -154,13 +163,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CAA7C0D2CFEEDE30021AEA3 /* DiMapView.swift in Sources */,
+				1CAA7C0B2CFEED830021AEA3 /* KalmanFilter.swift in Sources */,
 				1CAA7C042CFDABBB0021AEA3 /* Logger.swift in Sources */,
 				1CAA7BF32CFD9A700021AEA3 /* ContentView.swift in Sources */,
-				1CAA7C062CFDDE610021AEA3 /* Global.swift in Sources */,
 				1CAA7C092CFDF7B90021AEA3 /* SpeedometerView.swift in Sources */,
 				1CAA7C022CFDA9510021AEA3 /* LocationManagerHandler.swift in Sources */,
 				1CAA7BF12CFD9A700021AEA3 /* DiDriverApp.swift in Sources */,
 				1CAA7C002CFDA2FB0021AEA3 /* DrivingBehaviorDetector.swift in Sources */,
+				1CAA7C112CFEF2890021AEA3 /* IdentifiableLocation.swift in Sources */,
+				1CAA7C0F2CFEEE7E0021AEA3 /* DiMapData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

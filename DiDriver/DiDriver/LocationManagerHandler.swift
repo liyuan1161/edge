@@ -37,14 +37,16 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
             locationManager.requestWhenInUseAuthorization()
         } else if status == .authorizedWhenInUse {
             locationManager.requestAlwaysAuthorization()
+        } else{
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.startUpdatingLocation()
+                locationManager.allowsBackgroundLocationUpdates = true
+                locationManager.pausesLocationUpdatesAutomatically = false
+                locationManager.startMonitoringSignificantLocationChanges()
+            } else {
+                logMessage("位置服务不可用，请检查设备设置",level: .error)
+            }
         }
-        
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
-        } else {
-            logMessage("位置服务不可用，请检查设备设置",level: .error)
-        }
-        locationManager.allowsBackgroundLocationUpdates = true
     }
     
     private func setupMotionManager() {
@@ -75,6 +77,8 @@ class LocationManagerHandler: NSObject, CLLocationManagerDelegate {
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.pausesLocationUpdatesAutomatically = false
             locationManager.startMonitoringSignificantLocationChanges()
+            locationManager.startUpdatingLocation()
+
             logMessage("位置授权成功")
         case .denied, .restricted:
             logMessage("位置授权被拒绝或受限")

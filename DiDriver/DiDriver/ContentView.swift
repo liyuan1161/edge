@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     @StateObject private var behaviorDetector = DrivingBehaviorDetector()
@@ -53,6 +54,27 @@ struct ContentView: View {
                          .background(Color.black.opacity(0.7))
                          .cornerRadius(10)
                 }
+
+                let defaultCoordinate = CLLocationCoordinate2D(latitude: 34.2692, longitude: 108.9465) // 西安钟楼
+
+                // 创建一个默认的 MKCoordinateRegion
+                let defaultRegion = MKCoordinateRegion(
+                    center: defaultCoordinate,
+                    span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05) // 缩放级别
+                )
+
+                // 如果 behaviorDetector.mapData 有特定逻辑，也可以自定义
+                if let lastLocation = behaviorDetector.mapData.getLocations().last {
+                    let customRegion = MKCoordinateRegion(
+                        center: lastLocation.coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                    )
+                    
+                    DiMapView(mapData: behaviorDetector.mapData, region: customRegion)
+                } else {
+                    DiMapView(mapData: behaviorDetector.mapData, region: defaultRegion)
+                }
+                
                 Spacer()
             }
             .padding()

@@ -26,6 +26,7 @@ class DrivingBehaviorDetector: ObservableObject {
     @Published var rawSpeed: Double = 0.0 // 原始速度，单位为 km/h
     @Published var smoothedSpeed: Double = 0.0 // 平滑后的速度，单位为 km/h
     @Published var speedChangeBehavior: String = "速度无变化" // 新字段
+    @Published var mapData = DiMapData() // 使用 @Published
     
     // 旋转检测参数
     private var rotationSamples: [(time: TimeInterval, angle: Double)] = []
@@ -57,6 +58,9 @@ class DrivingBehaviorDetector: ObservableObject {
         rawSpeed = location.speed * 3.6
         smoothedSpeed = filteredSpeed * 3.6
         currentSpeed = smoothedSpeed
+        
+        // 添加位置到 DiMapData
+        mapData.addLocation(location)
         
         // 检测加速/减速
         detectSpeedBehavior(speedDifference: filteredSpeed - lastSpeed)
@@ -152,21 +156,5 @@ class DrivingBehaviorDetector: ObservableObject {
 }
 
 // 简单的卡尔曼滤波器实现
-class KalmanFilter {
-    private var estimate: Double = 0.0
-    private var errorEstimate: Double = 1.0
-    private var errorMeasure: Double = 0.1
-    private var q: Double = 0.1
 
-    func filter(measurement: Double) -> Double {
-        let prediction = estimate
-        let errorPrediction = errorEstimate + q
-
-        let k = errorPrediction / (errorPrediction + errorMeasure)
-        estimate = prediction + k * (measurement - prediction)
-        errorEstimate = (1 - k) * errorPrediction
-
-        return estimate
-    }
-}
 
