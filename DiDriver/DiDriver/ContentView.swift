@@ -18,42 +18,34 @@ struct ContentView: View {
             
             VStack(spacing: 30) {
                 Text("驾驶行为检测")
-                    .font(.largeTitle)
+                    .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding()
+                Text("\(behaviorDetector.detectedBehavior)-\(behaviorDetector.speedChangeBehavior)")
+                     .font(.footnote)
+                     .foregroundColor(.white)
+                     .padding()
+                     .background(Color.black.opacity(0.7))
+                     .cornerRadius(10)
 
                 SpeedometerView(speed: behaviorDetector.currentSpeed)
-                
-                Text("原始速度: \(String(format: "%.1f", behaviorDetector.rawSpeed)) km/h")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black.opacity(0.7))
-                    .cornerRadius(10)
-
-                Text("平滑速度: \(String(format: "%.1f", behaviorDetector.smoothedSpeed)) km/h")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black.opacity(0.7))
-                    .cornerRadius(10)
-                
                 HStack(spacing: 20) {
-                    Text(behaviorDetector.speedChangeBehavior)
-                         .font(.title)
-                         .foregroundColor(.white)
-                         .padding()
-                         .background(Color.black.opacity(0.7))
-                         .cornerRadius(10)
-
-                     Text(behaviorDetector.detectedBehavior)
-                         .font(.title)
-                         .foregroundColor(.white)
-                         .padding()
-                         .background(Color.black.opacity(0.7))
-                         .cornerRadius(10)
+                    Text("原始速度: \(String(format: "%.1f", behaviorDetector.rawSpeed)) km/h")
+                        .font(.footnote)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                   
+                    Text("平滑速度: \(String(format: "%.1f", behaviorDetector.smoothedSpeed)) km/h")
+                        .font(.footnote)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
                 }
+
 
                 let defaultCoordinate = CLLocationCoordinate2D(latitude: 34.2692, longitude: 108.9465) // 西安钟楼
 

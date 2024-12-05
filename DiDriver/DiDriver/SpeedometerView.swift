@@ -10,11 +10,15 @@ import SwiftUI
 struct SpeedometerView: View {
     var speed: Double
 
+    // 提取常量
+    private let circleSize: CGFloat = 160
+    private let fontSize: CGFloat = 36
+
     var body: some View {
         ZStack {
             Circle()
                 .fill(LinearGradient(gradient: Gradient(colors: [.white.opacity(0.2), .white.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
-                .frame(width: 220, height: 220)
+                .frame(width: circleSize, height: circleSize)
                 .shadow(radius: 10)
             
             Circle()
@@ -25,11 +29,11 @@ struct SpeedometerView: View {
                 .animation(.linear, value: speed)
             
             Text(String(format: "%.0f km/h", speed))
-                .font(.system(size: 50, weight: .bold, design: .rounded))
+                .font(.system(size: fontSize, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
                 .shadow(radius: 5)
         }
-        .frame(width: 220, height: 220)
+        .frame(width: circleSize, height: circleSize)
         .padding()
     }
 }

@@ -13,13 +13,21 @@ class DiMapData: ObservableObject {
 
     // 添加位置
     func addLocation(_ location: CLLocation) {
-        locations.append(location)
+        guard let lastLocation = locations.last else {
+            locations.append(location)
+            return
+        }
+
+        let distance = lastLocation.distance(from: location)
+        if distance > 20 {
+            locations.append(location)
+        }
     }
 
     // 获取所有位置
     func getLocations() -> [IdentifiableLocation] {
         return locations.map { location in
-            IdentifiableLocation(coordinate: location.coordinate)
+            IdentifiableLocation(coordinate: location.coordinate,course: location.course)
         }
     }
 

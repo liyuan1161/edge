@@ -11,4 +11,5 @@ import CoreLocation
 struct IdentifiableLocation: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
+    let course : Double
 }
